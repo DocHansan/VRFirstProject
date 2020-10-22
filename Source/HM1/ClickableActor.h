@@ -15,4 +15,6 @@ class HM1_API AClickableActor : public ABaseActor, public IClickableInterface
 {
 	GENERATED_BODY()
 	
+public:
+    void Click_Implementation();
 };
