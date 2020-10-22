@@ -11,7 +11,7 @@ AInteractiveActor::AInteractiveActor()
 
 	StaticMeshComponent = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("StaticMeshComponent"));
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
-	RootComponent = StaticMeshComponent;
+	//RootComponent = StaticMeshComponent;
 	StaticMeshComponent->AttachTo(RootComponent);
 
 }
@@ -28,9 +28,12 @@ void AInteractiveActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	StaticMeshComponent->AddRelativeRotation(FRotator(0.0f, 1.0f, 0.0f));
+	//Вращение 
+	//StaticMeshComponent->AddRelativeRotation(FRotator(0.0f, 1.0f, 0.0f));
+
 	//Меняем цвет 
 	FVector Color(0.0f, 0.0f, 0.0f);
+
 	/*Биты имеют смещение
 	Бит красного цвета имеет значение 1 (это его позиция, 0 позицию имеет бит None)
 	Когда мы меняем бит None с значения 0 на значение 1, Actor Color принимает значение 1
