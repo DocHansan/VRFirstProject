@@ -6,7 +6,7 @@
 #include "GameFramework/Pawn.h"
 #include "BaseVRPawn.generated.h"
 
-UCLASS()
+UCLASS(Abstract)
 class HM1_API ABaseVRPawn : public APawn
 {
 	GENERATED_BODY()
