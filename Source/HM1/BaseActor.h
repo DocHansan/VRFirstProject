@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Components/StaticMeshComponent.h"
-#include "InteractiveActor.generated.h"
+#include "BaseActor.generated.h"
 
 UENUM(Meta = (Bitflags))
 enum class EActorColor : uint8
@@ -18,13 +18,13 @@ enum class EActorColor : uint8
 //ENUM_CLASS_FLAGS(EActorColor)
 
 UCLASS()
-class HM1_API AInteractiveActor : public AActor
+class HM1_API ABaseActor : public AActor
 {
 	GENERATED_BODY()
 	
 public:	
 	// Sets default values for this actor's properties
-	AInteractiveActor();
+	ABaseActor();
 
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* StaticMeshComponent;
