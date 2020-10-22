@@ -15,7 +15,13 @@ ABaseVRPawn::ABaseVRPawn()
 void ABaseVRPawn::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
+	/*
+	Определяем, будет ли прорисовка луча только после нажатия кнопки или же всегда
+	False - отрисовывать всегда
+	True - отрисовка только после нажатия на кнопку телепортации
+	*/
+	AfterPressingTheButton = true;
 }
 
 // Called every frame
