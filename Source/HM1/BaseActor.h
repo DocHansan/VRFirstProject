@@ -17,7 +17,7 @@ enum class EActorColor : uint8
 
 //ENUM_CLASS_FLAGS(EActorColor)
 
-UCLASS()
+UCLASS(Abstract)
 class HM1_API ABaseActor : public AActor
 {
 	GENERATED_BODY()
@@ -26,7 +26,7 @@ public:
 	// Sets default values for this actor's properties
 	ABaseActor();
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UStaticMeshComponent* StaticMeshComponent;
 
 	UPROPERTY(EditAnywhere, Meta = (Bitmask, BitmaskEnum = "EActorColor"), Category = Color)
