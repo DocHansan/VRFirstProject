@@ -38,17 +38,17 @@ void AInteractiveActor::Tick(float DeltaTime)
 	*/
 	if (ActorColor & (uint8)EActorColor::ECB_Red + 1)
 	{
-		Color.X = 1.0f;
+		Color.X = RedIntensity;
 		UE_LOG(LogTemp, Warning, TEXT("red"));
 	}
 	if (ActorColor & (uint8)EActorColor::ECB_Green + 1)
 	{
-		Color.Y = 1.0f;
+		Color.Y = GreenIntensity;
 		UE_LOG(LogTemp, Warning, TEXT("green"));
 	}
 	if (ActorColor & (uint8)EActorColor::ECB_Blue + 2)
 	{
-		Color.Z = 1.0f;
+		Color.Z = BlueIntensity;
 		UE_LOG(LogTemp, Warning, TEXT("blue"));
 	}
 	StaticMeshComponent->SetVectorParameterValueOnMaterials(FName("Color"), Color);

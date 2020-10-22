@@ -33,6 +33,15 @@ public:
 	//TEnumAsByte<EActorColor> ActorColor;
 	uint8 ActorColor;
 
+	UPROPERTY(EditAnywhere, Category = Color, Meta = (ClampMin = "0.0", ClampMax = "1.0"))
+	float RedIntensity;
+
+	UPROPERTY(EditAnywhere, Category = Color, Meta = (ClampMin = "0.0", ClampMax = "1.0"))
+	float GreenIntensity;
+
+	UPROPERTY(EditAnywhere, Category = Color, Meta = (ClampMin = "0.0", ClampMax = "1.0"))
+	float BlueIntensity;
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
