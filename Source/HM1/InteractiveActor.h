@@ -5,8 +5,17 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Components/StaticMeshComponent.h"
-#include "Engine/StaticMesh.h"
 #include "InteractiveActor.generated.h"
+
+UENUM(Meta = (Bitflags))
+enum class EActorColor : uint8
+{
+	ECB_Red = 0x00           UMETA(DisplayName = "Red"),
+	ECB_Green = 0x01        UMETA(DisplayName = "Green"),
+	ECB_Blue = 0x02      UMETA(DisplayName = "Blue"),
+};
+
+//ENUM_CLASS_FLAGS(EActorColor)
 
 UCLASS()
 class HM1_API AInteractiveActor : public AActor
@@ -16,6 +25,13 @@ class HM1_API AInteractiveActor : public AActor
 public:	
 	// Sets default values for this actor's properties
 	AInteractiveActor();
+
+	UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* StaticMeshComponent;
+
+	UPROPERTY(EditAnywhere, Meta = (Bitmask, BitmaskEnum = "EActorColor"), Category = Color)
+	//TEnumAsByte<EActorColor> ActorColor;
+	uint8 ActorColor;
 
 protected:
 	// Called when the game starts or when spawned
