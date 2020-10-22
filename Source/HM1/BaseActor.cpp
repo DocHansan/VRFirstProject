@@ -26,7 +26,7 @@ void ABaseActor::BeginPlay()
 // Called every frame
 void ABaseActor::Tick(float DeltaTime)
 {
-	Super::Tick(DeltaTime);
+	
 
 	//Вращение 
 	//StaticMeshComponent->AddRelativeRotation(FRotator(0.0f, 1.0f, 0.0f));
@@ -55,6 +55,7 @@ void ABaseActor::Tick(float DeltaTime)
 		UE_LOG(LogTemp, Warning, TEXT("blue"));
 	}
 	StaticMeshComponent->SetVectorParameterValueOnMaterials(FName("Color"), Color);
+	Super::Tick(DeltaTime);
 
 }
 
