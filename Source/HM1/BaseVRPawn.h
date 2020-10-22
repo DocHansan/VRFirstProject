@@ -20,7 +20,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = TeleportVisualizing)
-	bool AfterPressingTheButton;
+	bool bAfterPressingTheButton;
 
 public:	
 	// Called every frame
