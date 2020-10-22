@@ -11,7 +11,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Abstract)
 class HM1_API ABaseLevelScriptActor : public ALevelScriptActor
 {
 	GENERATED_BODY()
