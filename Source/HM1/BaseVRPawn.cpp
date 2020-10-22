@@ -21,7 +21,7 @@ void ABaseVRPawn::BeginPlay()
 	False - отрисовывать всегда
 	True - отрисовка только после нажатия на кнопку телепортации
 	*/
-	AfterPressingTheButton = true;
+	//AfterPressingTheButton = true;
 }
 
 // Called every frame
