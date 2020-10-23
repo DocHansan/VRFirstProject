@@ -23,9 +23,9 @@ void ABaseActor::BeginPlay()
 	
 }
 
-FVector ABaseActor::ChangeColor(FVector Color)
+FVector ABaseActor::ChangeColor()
 {
-	return FVector(1.0f, 1.0f, 1.0f);
+	return FVector(FMath::RandRange(0.0f, 1.0f), FMath::RandRange(0.0f, 1.0f), FMath::RandRange(0.0f, 1.0f));
 }
 
 // Called every frame

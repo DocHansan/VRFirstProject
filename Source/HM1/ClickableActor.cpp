@@ -11,7 +11,7 @@ AClickableActor::AClickableActor()
 
 void AClickableActor::Click_Implementation()
 {
-    StaticMeshComponent->SetVectorParameterValueOnMaterials(FName("Color"), ChangeColor(FVector(0.9f, 0.9f, 0.0f)));
+    StaticMeshComponent->SetVectorParameterValueOnMaterials(FName("Color"), ChangeColor());
 }
 
 void AClickableActor::BeginPlay()
@@ -22,5 +22,5 @@ void AClickableActor::BeginPlay()
 
 void AClickableActor::Tick(float DeltaTime)
 {
-
+    //Super::Tick(DeltaTime);
 }

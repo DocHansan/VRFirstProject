@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Components/StaticMeshComponent.h"
+#include "Math/UnrealMathUtility.h"
 #include "BaseActor.generated.h"
 
 UENUM(Meta = (Bitflags))
@@ -42,7 +43,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = Color, Meta = (ClampMin = "0.0", ClampMax = "1.0"))
 	float BlueIntensity;
 
-	FVector ChangeColor(FVector Color);
+	FVector ChangeColor();
 
 protected:
 	// Called when the game starts or when spawned
