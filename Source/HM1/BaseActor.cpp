@@ -23,6 +23,11 @@ void ABaseActor::BeginPlay()
 	
 }
 
+FVector ABaseActor::ChangeColor(FVector Color)
+{
+	return FVector(1.0f, 1.0f, 1.0f);
+}
+
 // Called every frame
 void ABaseActor::Tick(float DeltaTime)
 {

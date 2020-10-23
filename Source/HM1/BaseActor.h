@@ -42,6 +42,8 @@ public:
 	UPROPERTY(EditAnywhere, Category = Color, Meta = (ClampMin = "0.0", ClampMax = "1.0"))
 	float BlueIntensity;
 
+	FVector ChangeColor(FVector Color);
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
