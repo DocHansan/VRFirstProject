@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "Components/InputComponent.h"
 #include "BaseVRPawn.generated.h"
 
 UCLASS(Abstract)
@@ -26,7 +27,21 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
+	//// Called to bind functionality to input
+	//virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
 	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
+
+	void StartChangeColorLeft();
+	void StopChangeColorLeft();
+	void StartChangeColorRight();
+	void StopChangeColorRight();
+
+	UPROPERTY(BlueprintReadWrite)
+	bool bIsNeedChangeColorLeft;
+
+	UPROPERTY(BlueprintReadWrite)
+	bool bIsNeedChangeColorRight;
 
 };

@@ -9,6 +9,9 @@ ABaseVRPawn::ABaseVRPawn()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	// PrimaryActorTick.bCanEverTick = true;
 
+	// Set this pawn to be controlled by the lowest-numbered player
+	AutoPossessPlayer = EAutoReceiveInput::Player0;
+
 }
 
 // Called when the game starts or when spawned
@@ -31,10 +34,43 @@ void ABaseVRPawn::Tick(float DeltaTime)
 
 }
 
+//// Called to bind functionality to input
+//void ABaseVRPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
+//{
+//	Super::SetupPlayerInputComponent(PlayerInputComponent);
+//
+//}
+
 // Called to bind functionality to input
 void ABaseVRPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
-	Super::SetupPlayerInputComponent(PlayerInputComponent);
+	Super::SetupPlayerInputComponent(InputComponent);
 
+	// Respond when our "ChangeColorLeft" key is pressed or released.
+	InputComponent->BindAction("ChangeColorLeft", IE_Pressed, this, &ABaseVRPawn::StartChangeColorLeft);
+	InputComponent->BindAction("ChangeColorLeft", IE_Released, this, &ABaseVRPawn::StopChangeColorLeft);
+
+	// Respond when our "ChangeColorRight" key is pressed or released.
+	InputComponent->BindAction("ChangeColorRight", IE_Pressed, this, &ABaseVRPawn::StartChangeColorRight);
+	InputComponent->BindAction("ChangeColorRight", IE_Released, this, &ABaseVRPawn::StopChangeColorRight);
 }
 
+void ABaseVRPawn::StartChangeColorLeft()
+{
+	bIsNeedChangeColorLeft = true;
+}
+
+void ABaseVRPawn::StopChangeColorLeft()
+{
+	bIsNeedChangeColorLeft = false;
+}
+
+void ABaseVRPawn::StartChangeColorRight()
+{
+	bIsNeedChangeColorRight = true;
+}
+
+void ABaseVRPawn::StopChangeColorRight()
+{
+	bIsNeedChangeColorRight = false;
+}

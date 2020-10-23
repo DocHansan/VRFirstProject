@@ -12,6 +12,7 @@ AClickableActor::AClickableActor()
 void AClickableActor::Click_Implementation()
 {
     StaticMeshComponent->SetVectorParameterValueOnMaterials(FName("Color"), ChangeColor());
+
 }
 
 void AClickableActor::BeginPlay()
