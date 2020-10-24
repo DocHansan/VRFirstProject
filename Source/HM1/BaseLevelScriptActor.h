@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Engine/LevelScriptActor.h"
 #include "Engine/World.h"
-#include "BaseActor.h"
+#include "SphereClickableActor.h"
 #include "BaseLevelScriptActor.generated.h"
 
 /**
