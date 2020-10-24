@@ -20,12 +20,15 @@ ABaseActor::ABaseActor()
 void ABaseActor::BeginPlay()
 {
 	Super::BeginPlay();
+
+	Color = FVector(FMath::RandRange(0.0f, 1.0f), FMath::RandRange(0.0f, 1.0f), FMath::RandRange(0.0f, 1.0f));
 	
 }
 
 FVector ABaseActor::ChangeColor()
 {
-	return FVector(FMath::RandRange(0.0f, 1.0f), FMath::RandRange(0.0f, 1.0f), FMath::RandRange(0.0f, 1.0f));
+	Color = FVector(FMath::RandRange(0.0f, 1.0f), FMath::RandRange(0.0f, 1.0f), FMath::RandRange(0.0f, 1.0f));
+	return Color;
 }
 
 // Called every frame
@@ -37,7 +40,7 @@ void ABaseActor::Tick(float DeltaTime)
 	//StaticMeshComponent->AddRelativeRotation(FRotator(0.0f, 1.0f, 0.0f));
 
 	//Меняем цвет 
-	FVector Color(0.0f, 0.0f, 0.0f);
+	//FVector Color(0.0f, 0.0f, 0.0f);
 
 	/*Биты имеют смещение
 	Бит красного цвета имеет значение 1 (это его позиция, 0 позицию имеет бит None)

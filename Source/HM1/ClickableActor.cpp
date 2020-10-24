@@ -23,5 +23,5 @@ void AClickableActor::BeginPlay()
 
 void AClickableActor::Tick(float DeltaTime)
 {
-    //Super::Tick(DeltaTime);
+    Super::Tick(DeltaTime);
 }
