@@ -6,6 +6,7 @@
 #include "Engine/LevelScriptActor.h"
 #include "Engine/World.h"
 #include "SphereClickableActor.h"
+#include "CubeClickableActor.h"
 #include "BaseLevelScriptActor.generated.h"
 
 /**
