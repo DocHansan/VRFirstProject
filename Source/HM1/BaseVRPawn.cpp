@@ -12,6 +12,21 @@ ABaseVRPawn::ABaseVRPawn()
 	// Set this pawn to be controlled by the lowest-numbered player
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
 
+	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
+
+	ControllerLeft = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("ControllerLeft"));
+	ControllerLeft->SetTrackingSource(EControllerHand::Left);
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>ControllerMesh(TEXT("/Engine/VREditor/Devices/Vive/VivePreControllerMesh.VivePreControllerMesh")); 
+	ControllerLeft->SetCustomDisplayMesh(ControllerMesh.Object);
+	//ControllerLeft->MotionSource = FName(TEXT("Left"));
+	ControllerLeft->AttachTo(RootComponent);
+
+	ControllerRight = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("ControllerRight"));
+	ControllerRight->SetCustomDisplayMesh(ControllerMesh.Object);
+	ControllerRight->SetTrackingSource(EControllerHand::Right);
+	//ControllerRight->MotionSource = FName(TEXT("Right"));
+	ControllerRight->AttachTo(RootComponent);
+
 }
 
 // Called when the game starts or when spawned

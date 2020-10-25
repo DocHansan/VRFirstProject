@@ -5,6 +5,10 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
 #include "Components/InputComponent.h"
+#include "MotionControllerComponent.h"
+#include "UObject/ConstructorHelpers.h"
+#include "Engine/StaticMesh.h"
+//#include "HeadMountedDisplay.h"
 #include "BaseVRPawn.generated.h"
 
 UCLASS(Abstract)
@@ -15,6 +19,12 @@ class HM1_API ABaseVRPawn : public APawn
 public:
 	// Sets default values for this pawn's properties
 	ABaseVRPawn();
+
+	UPROPERTY(EditAnywhere)
+	UMotionControllerComponent* ControllerLeft;
+
+	UPROPERTY(EditAnywhere)
+	UMotionControllerComponent* ControllerRight;
 
 protected:
 	// Called when the game starts or when spawned
