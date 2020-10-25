@@ -9,7 +9,7 @@ ACubePickableActor::ACubePickableActor()
     PrimaryActorTick.bCanEverTick = true;
 
     // Накидываем меш сферы
-    static ConstructorHelpers::FObjectFinder<UStaticMesh>SphereMesh(TEXT("StaticMesh'/Engine/BasicShapes/Cube.Cube'"));
+    static ConstructorHelpers::FObjectFinder<UStaticMesh>SphereMesh(TEXT("/Game/Meshes/CubeMesh_1.CubeMesh_1"));
     StaticMeshComponent->SetStaticMesh(SphereMesh.Object);
 
     // Накидываем статический материал
