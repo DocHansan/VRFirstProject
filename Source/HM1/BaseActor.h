@@ -6,6 +6,12 @@
 #include "GameFramework/Actor.h"
 #include "Components/StaticMeshComponent.h"
 #include "Math/UnrealMathUtility.h"
+#include "ClickableInterface.h"
+#include "PickableInterface.h"
+#include "UObject/ConstructorHelpers.h"
+#include "Engine/StaticMesh.h"
+#include "Materials/MaterialInstanceDynamic.h"
+#include "Materials/MaterialInstanceConstant.h"
 #include "BaseActor.generated.h"
 
 UENUM(Meta = (Bitflags))

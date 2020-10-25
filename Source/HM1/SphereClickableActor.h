@@ -4,10 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "ClickableActor.h"
-#include "UObject/ConstructorHelpers.h"
-#include "Engine/StaticMesh.h"
-#include "Materials/MaterialInstanceDynamic.h"
-#include "Materials/MaterialInstanceConstant.h"
 #include "SphereClickableActor.generated.h"
 
 /**

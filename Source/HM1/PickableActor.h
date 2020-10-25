@@ -4,8 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "BaseActor.h"
-#include "ClickableInterface.h"
-#include "PickableInterface.h"
 #include "PickableActor.generated.h"
 
 /**
