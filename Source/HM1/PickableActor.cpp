@@ -15,6 +15,11 @@ void APickableActor::Click_Implementation()
 
 }
 
+void APickableActor::Pick_Implementation()
+{
+
+}
+
 void APickableActor::BeginPlay()
 {
     Super::BeginPlay();
