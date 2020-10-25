@@ -14,6 +14,8 @@ ABaseActor::ABaseActor()
 	//RootComponent = StaticMeshComponent;
 	StaticMeshComponent->AttachTo(RootComponent);
 
+	StaticMeshComponent->SetSimulatePhysics(true);
+
 }
 
 // Called when the game starts or when spawned

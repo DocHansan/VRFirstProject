@@ -12,6 +12,7 @@
 #include "Engine/StaticMesh.h"
 #include "Materials/MaterialInstanceDynamic.h"
 #include "Materials/MaterialInstanceConstant.h"
+#include "Components/PrimitiveComponent.h"
 #include "BaseActor.generated.h"
 
 UENUM(Meta = (Bitflags))
