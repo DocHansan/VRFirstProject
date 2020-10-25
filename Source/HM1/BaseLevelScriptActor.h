@@ -7,6 +7,8 @@
 #include "Engine/World.h"
 #include "SphereClickableActor.h"
 #include "CubeClickableActor.h"
+#include "SpherePickableActor.h"
+#include "CubePickableActor.h"
 #include "BaseLevelScriptActor.generated.h"
 
 /**
