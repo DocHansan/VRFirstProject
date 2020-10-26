@@ -8,6 +8,8 @@
 #include "MotionControllerComponent.h"
 #include "UObject/ConstructorHelpers.h"
 #include "Engine/StaticMesh.h"
+#include "Components/CapsuleComponent.h"
+//#include "UObject/NameTypes.h"
 //#include "HeadMountedDisplay.h"
 #include "BaseVRPawn.generated.h"
 
@@ -20,11 +22,17 @@ public:
 	// Sets default values for this pawn's properties
 	ABaseVRPawn();
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UMotionControllerComponent* ControllerLeft;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UMotionControllerComponent* ControllerRight;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UCapsuleComponent* CollisionLeft;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	UCapsuleComponent* CollisionRight;
 
 protected:
 	// Called when the game starts or when spawned

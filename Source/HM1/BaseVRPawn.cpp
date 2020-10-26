@@ -6,7 +6,7 @@
 // Sets default values
 ABaseVRPawn::ABaseVRPawn()
 {
- 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
+	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	// PrimaryActorTick.bCanEverTick = true;
 
 	// Set this pawn to be controlled by the lowest-numbered player
@@ -14,18 +14,39 @@ ABaseVRPawn::ABaseVRPawn()
 
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 
+	// Создание левого контроллера с мешем
 	ControllerLeft = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("ControllerLeft"));
-	ControllerLeft->SetTrackingSource(EControllerHand::Left);
-	static ConstructorHelpers::FObjectFinder<UStaticMesh>ControllerMesh(TEXT("/Engine/VREditor/Devices/Vive/VivePreControllerMesh.VivePreControllerMesh")); 
+	static ConstructorHelpers::FObjectFinder<UStaticMesh>ControllerMesh(TEXT("/Engine/VREditor/Devices/Vive/VivePreControllerMesh.VivePreControllerMesh"));
 	ControllerLeft->SetCustomDisplayMesh(ControllerMesh.Object);
+	ControllerLeft->SetTrackingSource(EControllerHand::Left);
 	//ControllerLeft->MotionSource = FName(TEXT("Left"));
+	ControllerLeft->SetShowDeviceModel(true);
+	ControllerLeft->SetDisplayModelSource(FName(TEXT("Custom")));
 	ControllerLeft->AttachTo(RootComponent);
 
+	CollisionLeft = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CollisionLeft"));
+	CollisionLeft->InitCapsuleSize(6.f, 10.f);
+	CollisionLeft->SetRelativeLocationAndRotation(FVector(10.f, 0.f, 0.f), FRotator(90.f, 0.f, 0.f));
+	CollisionLeft->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
+	CollisionLeft->SetCollisionProfileName(FName(TEXT("Capsule Collision")));
+	//CollisionLeft->BodyInstance.SetCollisionProfileName("OverlapAll");
+	CollisionLeft->AttachTo(ControllerLeft);
+
+	// Создание правого контроллера с мешем
 	ControllerRight = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("ControllerRight"));
 	ControllerRight->SetCustomDisplayMesh(ControllerMesh.Object);
 	ControllerRight->SetTrackingSource(EControllerHand::Right);
 	//ControllerRight->MotionSource = FName(TEXT("Right"));
+	ControllerRight->SetShowDeviceModel(true);
+	ControllerRight->SetDisplayModelSource(FName(TEXT("Custom")));
 	ControllerRight->AttachTo(RootComponent);
+
+	CollisionRight = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CollisionRight"));
+	CollisionRight->InitCapsuleSize(6.f, 10.f);
+	CollisionRight->SetRelativeLocationAndRotation(FVector(10.f, 0.f, 0.f), FRotator(90.f, 0.f, 0.f));
+	//CollisionRight->BodyInstance.SetCollisionProfileName("OverlapAll");
+	CollisionRight->AttachTo(ControllerRight);
+
 
 }
 
