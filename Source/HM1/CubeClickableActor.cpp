@@ -16,6 +16,9 @@ ACubeClickableActor::ACubeClickableActor()
     static ConstructorHelpers::FObjectFinder<UMaterialInstanceConstant>Material(TEXT("/Game/Materials/ColorInst.ColorInst"));
     ConstantMaterialInst = Material.Object;
     StaticMeshComponent->SetMaterial(0, ConstantMaterialInst);
+
+    // Change mass
+    StaticMeshComponent->SetMassOverrideInKg(NAME_None, 1.f);
 }
 
 void ACubeClickableActor::BeginPlay()
