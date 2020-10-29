@@ -120,7 +120,8 @@ void ABaseVRPawn::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, clas
 		UE_LOG(LogTemp, Warning, TEXT("overlap"));
 		if (Cast<IPickableInterface>(OtherActor) != nullptr)
 		{
-			OtherComp->SetupAttachment(CollisionLeft);
+			OtherComp->AttachToComponent(CollisionLeft, FAttachmentTransformRules(EAttachmentRule::KeepWorld, EAttachmentRule::KeepWorld, EAttachmentRule::KeepWorld, true));
+			UE_LOG(LogTemp, Warning, TEXT("cast"));
 		}
 	}
 }
