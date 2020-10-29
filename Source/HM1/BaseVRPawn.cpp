@@ -21,16 +21,15 @@ ABaseVRPawn::ABaseVRPawn()
 	ControllerLeft->SetTrackingSource(EControllerHand::Left);
 	//ControllerLeft->MotionSource = FName(TEXT("Left"));
 	ControllerLeft->SetShowDeviceModel(true);
-	ControllerLeft->SetDisplayModelSource(FName(TEXT("Custom")));
-	ControllerLeft->AttachTo(RootComponent);
+	ControllerLeft->SetDisplayModelSource(TEXT("Custom"));
+	ControllerLeft->SetupAttachment(RootComponent);
 
 	CollisionLeft = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CollisionLeft"));
 	CollisionLeft->InitCapsuleSize(6.f, 10.f);
 	CollisionLeft->SetRelativeLocationAndRotation(FVector(10.f, 0.f, 0.f), FRotator(90.f, 0.f, 0.f));
-	CollisionLeft->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
-	CollisionLeft->SetCollisionProfileName(FName(TEXT("Capsule Collision")));
-	//CollisionLeft->BodyInstance.SetCollisionProfileName("OverlapAll");
-	CollisionLeft->AttachTo(ControllerLeft);
+	//CollisionLeft->SetGenerateOverlapEvents(true);
+	CollisionLeft->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
+	CollisionLeft->SetupAttachment(ControllerLeft);
 
 	// Создание правого контроллера с мешем
 	ControllerRight = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("ControllerRight"));
@@ -38,14 +37,15 @@ ABaseVRPawn::ABaseVRPawn()
 	ControllerRight->SetTrackingSource(EControllerHand::Right);
 	//ControllerRight->MotionSource = FName(TEXT("Right"));
 	ControllerRight->SetShowDeviceModel(true);
-	ControllerRight->SetDisplayModelSource(FName(TEXT("Custom")));
-	ControllerRight->AttachTo(RootComponent);
+	ControllerRight->SetDisplayModelSource(TEXT("Custom"));
+	ControllerRight->SetupAttachment(RootComponent);
 
 	CollisionRight = CreateDefaultSubobject<UCapsuleComponent>(TEXT("CollisionRight"));
 	CollisionRight->InitCapsuleSize(6.f, 10.f);
 	CollisionRight->SetRelativeLocationAndRotation(FVector(10.f, 0.f, 0.f), FRotator(90.f, 0.f, 0.f));
-	//CollisionRight->BodyInstance.SetCollisionProfileName("OverlapAll");
-	CollisionRight->AttachTo(ControllerRight);
+	CollisionRight->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
+	CollisionRight->SetupAttachment(ControllerRight);
+
 
 
 }
