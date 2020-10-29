@@ -13,7 +13,7 @@
 //#include "HeadMountedDisplay.h"
 #include "BaseVRPawn.generated.h"
 
-UCLASS(Abstract)
+UCLASS()
 class HM1_API ABaseVRPawn : public APawn
 {
 	GENERATED_BODY()
@@ -61,5 +61,8 @@ public:
 
 	UPROPERTY(BlueprintReadWrite)
 	bool bIsNeedChangeColorRight;
+
+	UFUNCTION(BlueprintCallable)
+	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 
 };

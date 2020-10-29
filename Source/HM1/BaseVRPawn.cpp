@@ -2,6 +2,7 @@
 
 
 #include "BaseVRPawn.h"
+#include "PickableInterface.h"
 
 // Sets default values
 ABaseVRPawn::ABaseVRPawn()
@@ -30,6 +31,7 @@ ABaseVRPawn::ABaseVRPawn()
 	//CollisionLeft->SetGenerateOverlapEvents(true);
 	CollisionLeft->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
 	CollisionLeft->SetupAttachment(ControllerLeft);
+	CollisionLeft->OnComponentBeginOverlap.AddDynamic(this, &ABaseVRPawn::OnOverlapBegin);
 
 	// Создание правого контроллера с мешем
 	ControllerRight = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("ControllerRight"));
@@ -109,4 +111,16 @@ void ABaseVRPawn::StartChangeColorRight()
 void ABaseVRPawn::StopChangeColorRight()
 {
 	bIsNeedChangeColorRight = false;
+}
+
+void ABaseVRPawn::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+	if (OtherActor && (OtherActor != this) && OtherComp)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("overlap"));
+		if (Cast<IPickableInterface>(OtherActor) != nullptr)
+		{
+			OtherComp->SetupAttachment(CollisionLeft);
+		}
+	}
 }
