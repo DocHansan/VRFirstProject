@@ -63,7 +63,7 @@ public:
 	bool bIsNeedChangeColorRight;
 
 	UPROPERTY(BlueprintReadWrite)
-	bool bIsOverlapingNow;
+	bool bIsOverlapingNow = false;
 
 	UPROPERTY(BlueprintReadWrite)
 	UActorComponent* OverlapingComponent;
