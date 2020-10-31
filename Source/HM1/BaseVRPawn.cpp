@@ -32,6 +32,7 @@ ABaseVRPawn::ABaseVRPawn()
 	CollisionLeft->SetCollisionProfileName(TEXT("OverlapAllDynamic"));
 	CollisionLeft->SetupAttachment(ControllerLeft);
 	CollisionLeft->OnComponentBeginOverlap.AddDynamic(this, &ABaseVRPawn::OnOverlapBegin);
+	CollisionLeft->OnComponentEndOverlap.AddDynamic(this, &ABaseVRPawn::OnOverlapEnd);
 
 	// Создание правого контроллера с мешем
 	ControllerRight = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("ControllerRight"));
@@ -118,10 +119,28 @@ void ABaseVRPawn::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, clas
 	if (OtherActor && (OtherActor != this) && OtherComp)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("overlap"));
-		if (Cast<IPickableInterface>(OtherActor) != nullptr)
+		if (Cast<IPickableInterface>(OtherActor))
 		{
-			OtherComp->AttachToComponent(CollisionLeft, FAttachmentTransformRules(EAttachmentRule::KeepWorld, EAttachmentRule::KeepWorld, EAttachmentRule::KeepWorld, true));
 			UE_LOG(LogTemp, Warning, TEXT("cast"));
+			OtherComp->SetSimulatePhysics(true);
+			OtherComp->AttachToComponent(RootComponent, FAttachmentTransformRules(EAttachmentRule::KeepWorld, EAttachmentRule::KeepWorld, EAttachmentRule::KeepWorld, true));
+			OtherComp->SetLinearDamping(100000);
+			OtherComp->SetAngularDamping(100000);
+			bIsOverlapingNow = true;
+			OverlapingComponent = OtherComp;
 		}
+	}
+}
+
+void ABaseVRPawn::OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
+	if (OtherActor && (OtherActor != this) && OtherComp && (OtherComp == OverlapingComponent))
+	{
+		UE_LOG(LogTemp, Warning, TEXT("end overlap"));
+		OtherComp->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, true));
+		OtherComp->SetLinearDamping(0.01f);
+		OtherComp->SetAngularDamping(0.f);
+		bIsOverlapingNow = false;
+		OverlapingComponent = nullptr;
 	}
 }
