@@ -64,6 +64,8 @@ void ABaseVRPawn::BeginPlay()
 	True - отрисовка только после нажатия на кнопку телепортации
 	*/
 	//bAfterPressingTheButton = true;
+
+	bIsOverlappingNow = false;
 }
 
 // Called every frame
@@ -116,7 +118,7 @@ void ABaseVRPawn::StopChangeColorRight()
 
 void ABaseVRPawn::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (OtherActor && (OtherActor != this) && OtherComp && !bIsOverlapingNow)
+	if (OtherActor && (OtherActor != this) && OtherComp && !bIsOverlappingNow)
 	{
 		UE_LOG(LogTemp, Warning, TEXT("overlap"));
 		if (Cast<IPickableInterface>(OtherActor))
@@ -126,21 +128,21 @@ void ABaseVRPawn::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, clas
 			OtherComp->AttachToComponent(RootComponent, FAttachmentTransformRules(EAttachmentRule::KeepWorld, EAttachmentRule::KeepWorld, EAttachmentRule::KeepWorld, true));
 			OtherComp->SetLinearDamping(100000);
 			OtherComp->SetAngularDamping(100000);
-			bIsOverlapingNow = true;
-			OverlapingComponent = OtherComp;
+			bIsOverlappingNow = true;
+			OverlappingComponent = OtherComp;
 		}
 	}
 }
 
 void ABaseVRPawn::OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	if (OtherActor && (OtherActor != this) && OtherComp && (OtherComp == OverlapingComponent))
+	if (OtherActor && (OtherActor != this) && OtherComp && (OtherComp == OverlappingComponent))
 	{
 		UE_LOG(LogTemp, Warning, TEXT("end overlap"));
 		OtherComp->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, true));
 		OtherComp->SetLinearDamping(0.01f);
 		OtherComp->SetAngularDamping(0.f);
-		bIsOverlapingNow = false;
-		OverlapingComponent = nullptr;
+		bIsOverlappingNow = false;
+		OverlappingComponent = nullptr;
 	}
 }
