@@ -9,6 +9,7 @@
 #include "UObject/ConstructorHelpers.h"
 #include "Engine/StaticMesh.h"
 #include "Components/CapsuleComponent.h"
+#include "TimerManager.h"
 //#include "UObject/NameTypes.h"
 //#include "HeadMountedDisplay.h"
 #include "BaseVRPawn.generated.h"
@@ -56,6 +57,11 @@ public:
 	void StartChangeColorRight();
 	void StopChangeColorRight();
 
+	void PickUpLeft();
+	void DropLeft();
+	void PickUpRight();
+	void DropRight();
+
 	UPROPERTY(BlueprintReadWrite)
 	bool bIsNeedChangeColorLeft;
 
@@ -63,15 +69,36 @@ public:
 	bool bIsNeedChangeColorRight;
 
 	UPROPERTY(BlueprintReadWrite)
-	bool bIsOverlappingNow;
+	bool bIsPickedUpNowLeft = false;
 
 	UPROPERTY(BlueprintReadWrite)
-	UPrimitiveComponent* OverlappingComponent;
+	bool bIsPickedUpNowRight = false;
 
-	UFUNCTION(BlueprintCallable)
-	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+	UPROPERTY(BlueprintReadWrite)
+	bool bIsOverlappingNowLeft = false;
 
-	UFUNCTION(BlueprintCallable)
-	void OnOverlapEnd(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	UPROPERTY(BlueprintReadWrite)
+	bool bIsOverlappingNowRight = false;
+
+	UPROPERTY(BlueprintReadWrite)
+	UPrimitiveComponent* OverlappingComponentLeft;
+
+	UPROPERTY(BlueprintReadWrite)
+	UPrimitiveComponent* OverlappingComponentRight;
+
+	UFUNCTION()
+	void OnOverlapBeginLeft(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnOverlapEndLeft(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+	UFUNCTION()
+	void OnOverlapBeginRight(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
+
+	UFUNCTION()
+	void OnOverlapEndRight(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+	UFUNCTION()
+	void DetachFromComponentDelay(class UPrimitiveComponent* DetachingComp);
 
 };
