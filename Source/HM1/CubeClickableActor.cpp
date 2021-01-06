@@ -17,8 +17,12 @@ ACubeClickableActor::ACubeClickableActor()
     ConstantMaterialInst = Material.Object;
     StaticMeshComponent->SetMaterial(0, ConstantMaterialInst);
 
+    static ConstructorHelpers::FObjectFinder<UPhysicalMaterial>PhysMaterial(TEXT("/Game/Materials/SpherePhysicalMaterial.SpherePhysicalMaterial"));
+    PhysicalMaterial = PhysMaterial.Object;
+    StaticMeshComponent->SetPhysMaterialOverride(PhysicalMaterial);
+
     // Change mass
-    StaticMeshComponent->SetMassOverrideInKg(NAME_None, 1.f);
+    StaticMeshComponent->SetMassOverrideInKg(NAME_None, 15.f);
 }
 
 void ACubeClickableActor::BeginPlay()
