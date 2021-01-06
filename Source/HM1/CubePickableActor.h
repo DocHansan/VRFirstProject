@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "PickableActor.h"
+#include "PhysicalMaterials/PhysicalMaterial.h"
 #include "CubePickableActor.generated.h"
 
 /**
@@ -26,6 +27,8 @@ protected:
 	UMaterialInstanceConstant* ConstantMaterialInst;
 
 	UMaterialInstanceDynamic* DynamicMaterialInst;
+
+	UPhysicalMaterial* PhysicalMaterial;
 
 public:
 	// Called every frame
