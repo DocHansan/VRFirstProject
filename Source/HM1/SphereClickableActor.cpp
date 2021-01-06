@@ -16,6 +16,13 @@ ASphereClickableActor::ASphereClickableActor()
     static ConstructorHelpers::FObjectFinder<UMaterialInstanceConstant>Material(TEXT("/Game/Materials/ColorInst.ColorInst"));
     ConstantMaterialInst = Material.Object;
     StaticMeshComponent->SetMaterial(0, ConstantMaterialInst);
+
+    static ConstructorHelpers::FObjectFinder<UPhysicalMaterial>PhysMaterial(TEXT("/Game/Materials/SpherePhysicalMaterial.SpherePhysicalMaterial"));
+    PhysicalMaterial = PhysMaterial.Object;
+    StaticMeshComponent->SetPhysMaterialOverride(PhysicalMaterial);
+
+    // Change mass
+    StaticMeshComponent->SetMassOverrideInKg(NAME_None, 5.f);
 }
 
 void ASphereClickableActor::BeginPlay()
