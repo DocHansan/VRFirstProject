@@ -10,11 +10,14 @@
 #include "Engine/StaticMesh.h"
 #include "Components/CapsuleComponent.h"
 #include "TimerManager.h"
+#include "Components/WidgetInteractionComponent.h"
+#include "TimerManager.h"
+#include "Engine/EngineTypes.h"
 //#include "UObject/NameTypes.h"
 //#include "HeadMountedDisplay.h"
 #include "BaseVRPawn.generated.h"
 
-UCLASS(Blueprintable, Blueprintable)
+UCLASS()
 class HM1_API ABaseVRPawn : public APawn
 {
 	GENERATED_BODY()
@@ -22,7 +25,7 @@ class HM1_API ABaseVRPawn : public APawn
 public:
 	// Sets default values for this pawn's properties
 	ABaseVRPawn();
-
+	/*
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UMotionControllerComponent* ControllerLeft;
 
@@ -35,6 +38,14 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 	UCapsuleComponent* CollisionRight;
 
+	UPROPERTY(BlueprintReadWrite)
+	UWidgetInteractionComponent* WidgetInteractionComponentLeft;
+
+	UPROPERTY(BlueprintReadWrite)
+	UWidgetInteractionComponent* WidgetInteractionComponentRight;
+
+	FTimerHandle TimerLeft;
+	*/
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -50,35 +61,29 @@ public:
 	//virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* InputComponent) override;
+	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
 
 	void StartChangeColorLeft();
 	void StopChangeColorLeft();
 	void StartChangeColorRight();
 	void StopChangeColorRight();
-
+	/*
 	void PickUpLeft();
 	void DropLeft();
 	void PickUpRight();
 	void DropRight();
-
+	*/
 	UPROPERTY(BlueprintReadWrite)
 	bool bIsNeedChangeColorLeft;
 
 	UPROPERTY(BlueprintReadWrite)
 	bool bIsNeedChangeColorRight;
-
+	/*
 	UPROPERTY(BlueprintReadWrite)
 	bool bIsPickedUpNowLeft = false;
 
 	UPROPERTY(BlueprintReadWrite)
 	bool bIsPickedUpNowRight = false;
-
-	UPROPERTY(BlueprintReadWrite)
-	bool bIsOverlappingNowLeft = false;
-
-	UPROPERTY(BlueprintReadWrite)
-	bool bIsOverlappingNowRight = false;
 
 	UPROPERTY(BlueprintReadWrite)
 	UPrimitiveComponent* OverlappingComponentLeft;
@@ -100,5 +105,5 @@ public:
 
 	UFUNCTION()
 	void DetachFromComponentDelay(class UPrimitiveComponent* DetachingComp);
-
+	*/
 };
