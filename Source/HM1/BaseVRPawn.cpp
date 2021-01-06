@@ -12,9 +12,9 @@ ABaseVRPawn::ABaseVRPawn()
 
 	// Set this pawn to be controlled by the lowest-numbered player
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
-
+	
 	RootComponent = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
-
+	/*
 	// Создание левого контроллера с мешем
 	ControllerLeft = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("ControllerLeft"));
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>ControllerMesh(TEXT("/Engine/VREditor/Devices/Vive/VivePreControllerMesh.VivePreControllerMesh"));
@@ -34,6 +34,9 @@ ABaseVRPawn::ABaseVRPawn()
 	CollisionLeft->OnComponentBeginOverlap.AddDynamic(this, &ABaseVRPawn::OnOverlapBeginLeft);
 	CollisionLeft->OnComponentEndOverlap.AddDynamic(this, &ABaseVRPawn::OnOverlapEndLeft);
 
+	WidgetInteractionComponentLeft = CreateDefaultSubobject<UWidgetInteractionComponent>(TEXT("WidgetInteractionComponentLeft"));
+	WidgetInteractionComponentLeft->SetupAttachment(ControllerLeft);
+
 	// Создание правого контроллера с мешем
 	ControllerRight = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("ControllerRight"));
 	ControllerRight->SetCustomDisplayMesh(ControllerMesh.Object);
@@ -51,6 +54,9 @@ ABaseVRPawn::ABaseVRPawn()
 	CollisionRight->OnComponentBeginOverlap.AddDynamic(this, &ABaseVRPawn::OnOverlapBeginRight);
 	CollisionRight->OnComponentEndOverlap.AddDynamic(this, &ABaseVRPawn::OnOverlapEndRight);
 
+	WidgetInteractionComponentRight = CreateDefaultSubobject<UWidgetInteractionComponent>(TEXT("WidgetInteractionComponentRight"));
+	WidgetInteractionComponentRight->SetupAttachment(ControllerRight);
+	*/
 
 
 }
@@ -86,7 +92,7 @@ void ABaseVRPawn::Tick(float DeltaTime)
 // Called to bind functionality to input
 void ABaseVRPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
-	Super::SetupPlayerInputComponent(InputComponent);
+	Super::SetupPlayerInputComponent(InputComponent); // Will it work?
 
 	// Respond when our "ChangeColorLeft" key is pressed or released.
 	InputComponent->BindAction("ChangeColorLeft", IE_Pressed, this, &ABaseVRPawn::StartChangeColorLeft);
@@ -95,7 +101,7 @@ void ABaseVRPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	// Respond when our "ChangeColorRight" key is pressed or released.
 	InputComponent->BindAction("ChangeColorRight", IE_Pressed, this, &ABaseVRPawn::StartChangeColorRight);
 	InputComponent->BindAction("ChangeColorRight", IE_Released, this, &ABaseVRPawn::StopChangeColorRight);
-
+	/*
 	// Respond when our "PickUpLeft" key is pressed or released.
 	InputComponent->BindAction("PickUpLeft", IE_Pressed, this, &ABaseVRPawn::PickUpLeft);
 	InputComponent->BindAction("PickUpLeft", IE_Released, this, &ABaseVRPawn::DropLeft);
@@ -103,6 +109,7 @@ void ABaseVRPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	// Respond when our "PickUpRight" key is pressed or released.
 	InputComponent->BindAction("PickUpRight", IE_Pressed, this, &ABaseVRPawn::PickUpRight);
 	InputComponent->BindAction("PickUpRight", IE_Released, this, &ABaseVRPawn::DropRight);
+	*/
 }
 
 // Change color
@@ -125,28 +132,31 @@ void ABaseVRPawn::StopChangeColorRight()
 {
 	bIsNeedChangeColorRight = false;
 }
-
+/*
 // PickUp and Drop
 void ABaseVRPawn::PickUpLeft()
 {
-	if (bIsOverlappingNowLeft && !bIsPickedUpNowLeft && OverlappingComponentLeft)
+	if (OverlappingComponentLeft)
 	{
 		OverlappingComponentLeft->SetSimulatePhysics(true);
-		OverlappingComponentLeft->AttachToComponent(RootComponent, FAttachmentTransformRules(EAttachmentRule::KeepWorld, EAttachmentRule::KeepWorld, EAttachmentRule::KeepWorld, true));
-		OverlappingComponentLeft->SetLinearDamping(100000);
-		OverlappingComponentLeft->SetAngularDamping(100000);
+		OverlappingComponentLeft->AttachToComponent(WidgetInteractionComponentLeft, FAttachmentTransformRules(EAttachmentRule::KeepWorld, EAttachmentRule::KeepWorld, EAttachmentRule::KeepWorld, true));
+		OverlappingComponentLeft->SetLinearDamping(1000000);
+		OverlappingComponentLeft->SetAngularDamping(1000000);
 		bIsPickedUpNowLeft = true;
 	}
 }
 
 void ABaseVRPawn::DropLeft()
 {
-	if (bIsOverlappingNowLeft && bIsPickedUpNowLeft && OverlappingComponentLeft)
+	if (OverlappingComponentLeft && bIsPickedUpNowLeft)
 	{
 		OverlappingComponentLeft->SetSimulatePhysics(false);
 		OverlappingComponentLeft->SetLinearDamping(0.01f);
 		OverlappingComponentLeft->SetAngularDamping(0.f);
-		//GetWorldTimerManager().SetTimer(FTimerHandle(), this, &ABaseVRPawn::DetachFromComponentDelay(), 1.0f, true, 2.0f);
+		GetWorldTimerManager().SetTimer(TimerLeft, this, &ABaseVRPawn::DetachFromComponentDelay, 1.0f, false, -1.0f);
+		//GetWorld()->GetTimerManager().SetTimer(FTimerHandle(), this, &ABaseVRPawn::DetachFromComponentDelay(OverlappingComponentLeft), 1.0f, true, 2.0f);
+		//GetWorld()->GetTimerManager().SetTimer(FTimerHandle(), 1.f, false);
+		//GetWorldTimerManager().SetTimer(FTimerHandle(), 1, false, -1.f);
 		OverlappingComponentLeft->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, true));
 		OverlappingComponentLeft->SetSimulatePhysics(true);
 		bIsPickedUpNowLeft = false;
@@ -156,23 +166,24 @@ void ABaseVRPawn::DropLeft()
 void ABaseVRPawn::DetachFromComponentDelay(class UPrimitiveComponent* DetachingComp)
 {
 	DetachingComp->DetachFromComponent(FDetachmentTransformRules(EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, EDetachmentRule::KeepWorld, true));
+	DetachingComp->SetSimulatePhysics(true);
 }
 
 void ABaseVRPawn::PickUpRight()
 {
-	if (bIsOverlappingNowRight && !bIsPickedUpNowRight && OverlappingComponentRight)
+	if (OverlappingComponentRight)
 	{
 		OverlappingComponentRight->SetSimulatePhysics(true);
-		OverlappingComponentRight->AttachToComponent(RootComponent, FAttachmentTransformRules(EAttachmentRule::KeepWorld, EAttachmentRule::KeepWorld, EAttachmentRule::KeepWorld, true));
-		OverlappingComponentRight->SetLinearDamping(100000);
-		OverlappingComponentRight->SetAngularDamping(100000);
-		bIsPickedUpNowLeft = true;
+		OverlappingComponentRight->AttachToComponent(WidgetInteractionComponentRight, FAttachmentTransformRules(EAttachmentRule::KeepWorld, EAttachmentRule::KeepWorld, EAttachmentRule::KeepWorld, true));
+		OverlappingComponentRight->SetLinearDamping(1000000);
+		OverlappingComponentRight->SetAngularDamping(1000000);
+		bIsPickedUpNowRight = true;
 	}
 }
 
 void ABaseVRPawn::DropRight()
 {
-	if (bIsOverlappingNowRight && bIsPickedUpNowRight && OverlappingComponentRight)
+	if (OverlappingComponentRight && bIsPickedUpNowRight)
 	{
 		OverlappingComponentRight->SetSimulatePhysics(false);
 		OverlappingComponentRight->SetLinearDamping(0.01f);
@@ -186,12 +197,11 @@ void ABaseVRPawn::DropRight()
 
 void ABaseVRPawn::OnOverlapBeginLeft(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (OtherActor && (OtherActor != this) && OtherComp && !bIsOverlappingNowLeft)
+	if (OtherActor && (OtherActor != this) && OtherComp && !bIsPickedUpNowLeft)
 	{
 		if (Cast<IPickableInterface>(OtherActor))
 		{
 			UE_LOG(LogTemp, Warning, TEXT("start overlap left"));
-			bIsOverlappingNowLeft = true;
 			OverlappingComponentLeft = OtherComp;
 		}
 	}
@@ -203,19 +213,18 @@ void ABaseVRPawn::OnOverlapEndLeft(class UPrimitiveComponent* OverlappedComp, cl
 	{
 		UE_LOG(LogTemp, Warning, TEXT("end overlap left"));
 		ABaseVRPawn::DropLeft();
-		bIsOverlappingNowLeft = false;
+		bIsPickedUpNowLeft = false;
 		OverlappingComponentLeft = nullptr;
 	}
 }
 
 void ABaseVRPawn::OnOverlapBeginRight(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (OtherActor && (OtherActor != this) && OtherComp && !bIsOverlappingNowRight)
+	if (OtherActor && (OtherActor != this) && OtherComp && !bIsPickedUpNowRight)
 	{
 		if (Cast<IPickableInterface>(OtherActor))
 		{
 			UE_LOG(LogTemp, Warning, TEXT("start overlap right"));
-			bIsOverlappingNowRight = true;
 			OverlappingComponentRight = OtherComp;
 		}
 	}
@@ -227,7 +236,8 @@ void ABaseVRPawn::OnOverlapEndRight(class UPrimitiveComponent* OverlappedComp, c
 	{
 		UE_LOG(LogTemp, Warning, TEXT("end overlap right"));
 		ABaseVRPawn::DropRight();
-		bIsOverlappingNowRight = false;
+		bIsPickedUpNowRight = false;
 		OverlappingComponentRight = nullptr;
 	}
 }
+*/
