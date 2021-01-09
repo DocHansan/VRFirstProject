@@ -50,6 +50,7 @@ public:
 	UPROPERTY(EditAnywhere, Category = Color, Meta = (ClampMin = "0.0", ClampMax = "1.0"))
 	float BlueIntensity;
 
+	UFUNCTION(BlueprintCallable)
 	FVector ChangeColor();
 
 	UPROPERTY(BlueprintReadWrite)
