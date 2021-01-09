@@ -13,7 +13,7 @@ ACubePickableActor::ACubePickableActor()
     StaticMeshComponent->SetStaticMesh(SphereMesh.Object);
 
     // Накидываем статический материал
-    static ConstructorHelpers::FObjectFinder<UMaterialInstanceConstant>Material(TEXT("/Game/Materials/ColorInst.ColorInst"));
+    static ConstructorHelpers::FObjectFinder<UMaterialInstanceConstant>Material(TEXT("/Game/Materials/Gold2_Inst.Gold2_Inst"));
     ConstantMaterialInst = Material.Object;
     StaticMeshComponent->SetMaterial(0, ConstantMaterialInst);
 
