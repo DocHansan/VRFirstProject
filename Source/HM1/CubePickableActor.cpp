@@ -17,9 +17,11 @@ ACubePickableActor::ACubePickableActor()
     ConstantMaterialInst = Material.Object;
     StaticMeshComponent->SetMaterial(0, ConstantMaterialInst);
 
+    /*
     static ConstructorHelpers::FObjectFinder<UPhysicalMaterial>PhysMaterial(TEXT("/Game/Materials/CubePhysicalMaterial.CubePhysicalMaterial"));
     PhysicalMaterial = PhysMaterial.Object;
     StaticMeshComponent->SetPhysMaterialOverride(PhysicalMaterial);
+    */
 
     // Change mass
     StaticMeshComponent->SetMassOverrideInKg(NAME_None, 25.f);

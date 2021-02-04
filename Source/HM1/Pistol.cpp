@@ -23,9 +23,11 @@ APistol::APistol()
     static ConstructorHelpers::FObjectFinder<UMaterialInstanceConstant>Material1(TEXT("MaterialInstanceConstant'/Game/Materials/Pistol1_Grass_Inst.Pistol1_Grass_Inst'"));
     ConstantMaterialInstGrass = Material1.Object;
 
+    /*
     static ConstructorHelpers::FObjectFinder<UPhysicalMaterial>PhysMaterial(TEXT("/Game/Materials/CubePhysicalMaterial.CubePhysicalMaterial"));
     PhysicalMaterial = PhysMaterial.Object;
     StaticMeshComponent->SetPhysMaterialOverride(PhysicalMaterial);
+    */
 
     // Change mass
     StaticMeshComponent->SetMassOverrideInKg(NAME_None, 1.f);
